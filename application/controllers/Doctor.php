@@ -425,6 +425,25 @@ class Doctor extends CI_Controller {
 			$datafinal['doctor_id'] = $data['doctor_id'];	
 			$datafinal['patient_id']=$this->session->userdata['frontend_logged_in']['id'];	
 			$result = $this->Doctor_Model->book_appointment($datafinal);
+			
+			$settings = get_icon();
+			$from_email=$settings->admin_email;
+			$configs = array(
+				'protocol'=>'smtp',
+				'smtp_host'=>$settings->smtp_host,
+				'smtp_user'=>$settings->smtp_username,
+				'smtp_pass'=>$settings->smtp_password,
+				'smtp_port'=>'465',
+				'charset'   => 'utf-8'
+			);             
+			$this->load->library('email');
+			$this->email->initialize($configs);
+			$this->email->from($from_email, "Admin");
+			$this->email->to('xian1017@outlook.com');
+			$this->email->subject('Booking Doctor');
+			$this->email->message('Booked Doctor');
+			$this->email->send();
+
 			if($result){
 				echo "loggedIn";
 			}else{
