@@ -411,7 +411,8 @@ class Doctor extends CI_Controller {
 			}
 		}
 	}
-	public function appointment(){	
+	public function appointment(){
+		echo json_encode($_POST);die;
 		if(isset($_POST)){
 			$data=$_POST;
 			$datafinal['status'] = $data['status'];
